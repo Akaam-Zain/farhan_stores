@@ -56,9 +56,11 @@ class SignUp extends StatelessWidget {
                         isObscure: true,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 70),
-                        child: ElevatedButton(
-                            onPressed: () => {}, child: Text("Sign Up")),
+                        padding: const EdgeInsets.only(top: 50.0),
+                        child: ButtonLarge(
+                          btnText: "Sign Up",
+                          btnOnPressed: () => {print("Sign Up Button Pressed")},
+                        ),
                       ),
                       Container(
                           alignment: Alignment.center,
