@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:farhan_stores/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,13 +24,18 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Farhan Stores"),
+        centerTitle: true,
+        leading: Icon(Icons.menu),
+        title: Text(
+          "Farhan Stores",
+          textAlign: TextAlign.center,
+        ),
         actions: [Icon(Icons.search), Icon(Icons.notifications)],
       ),
       bottomNavigationBar: BottomNavBar(),
-      body: Column(
-        children: [
-          CarouselSlider(
+      body: CustomScrollView(slivers: [
+        SliverToBoxAdapter(
+          child: CarouselSlider(
             options: CarouselOptions(
               height: 250.0,
               viewportFraction: 1,
@@ -48,20 +54,65 @@ class _HomePageState extends State<HomePage> {
               );
             }).toList(),
           ),
-          Container(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                  ),
-                  itemCount: 300,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      color: Colors.amber,
-                      child: Center(child: Text('$index')),
-                    );
-                  }))
-        ],
-      ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.all(25),
+          sliver: SliverToBoxAdapter(
+            child: Container(
+              child: Text("Categories"),
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.only(left: 30),
+          sliver: SliverToBoxAdapter(
+            child: Container(
+              height: 100.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 100.0,
+                    child: Card(
+                      child: Text('data'),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+        SliverFixedExtentList(
+          itemExtent: 50,
+          delegate: SliverChildListDelegate([
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              Container(child: Text("Hellow")),
+              Container(child: Text("Hellow")),
+            ]),
+          ]),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.only(left: 30),
+          sliver: SliverToBoxAdapter(
+            child: Container(
+              height: 200.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 200.0,
+                    child: Card(
+                      child: Text('data'),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }

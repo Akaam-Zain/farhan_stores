@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:farhan_stores/screens/home.dart';
-import 'package:farhan_stores/screens/signup.dart';
 import 'package:flutter/material.dart';
+import '../widgets/widgets.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -23,6 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return (HomePage());
   }
 }
