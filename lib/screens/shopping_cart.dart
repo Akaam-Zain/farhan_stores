@@ -11,7 +11,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Shopping Cart"),
-    );
+        child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Card(
+                  child: Container(height: 150, child: Text("Hellow")),
+                ),
+              );
+            }));
   }
 }

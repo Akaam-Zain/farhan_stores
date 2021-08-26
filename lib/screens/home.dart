@@ -1,5 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:farhan_stores/screens/shopping_cart.dart';
 import 'package:farhan_stores/widgets/bottom_navigation.dart';
+import 'package:farhan_stores/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -11,108 +12,64 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  final List<Widget> navTabs = <Widget>[
+    HomeWidget(),
+    ShoppingCart(),
+    ShoppingCart(),
+    ShoppingCart(),
   ];
+
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: Icon(Icons.menu),
-        title: Text(
-          "Farhan Stores",
-          textAlign: TextAlign.center,
-        ),
-        actions: [Icon(Icons.search), Icon(Icons.notifications)],
-      ),
-      bottomNavigationBar: BottomNavBar(),
-      body: CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              height: 250.0,
-              viewportFraction: 1,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-            ),
-            items: imgList.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      decoration: BoxDecoration(color: Colors.amber),
-                      child: Image.network(i, fit: BoxFit.cover, width: 100));
-                },
-              );
-            }).toList(),
+        appBar: AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => {},
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.all(25),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              child: Text("Categories"),
-            ),
+          title: Text(
+            "Farhan Stores",
+            textAlign: TextAlign.center,
           ),
+          actions: [
+            IconButton(onPressed: () => {}, icon: Icon(Icons.search)),
+            IconButton(onPressed: () => {}, icon: Icon(Icons.notifications)),
+          ],
         ),
-        SliverPadding(
-          padding: EdgeInsets.only(left: 30),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              height: 100.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 100.0,
-                    child: Card(
-                      child: Text('data'),
-                    ),
-                  );
-                },
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            fixedColor: Theme.of(context).primaryColor,
+            items: [
+              BottomNavigationBarItem(
+                  label: "Home",
+                  icon:
+                      Icon(Icons.home, color: Theme.of(context).primaryColor)),
+              BottomNavigationBarItem(
+                label: "Cart",
+                icon: Icon(Icons.shopping_cart,
+                    color: Theme.of(context).primaryColor),
               ),
-            ),
-          ),
-        ),
-        SliverFixedExtentList(
-          itemExtent: 50,
-          delegate: SliverChildListDelegate([
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Container(child: Text("Hellow")),
-              Container(child: Text("Hellow")),
-            ]),
-          ]),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.only(left: 30),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              height: 200.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 200.0,
-                    child: Card(
-                      child: Text('data'),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ]),
-    );
+              BottomNavigationBarItem(
+                  label: "Search",
+                  icon: Icon(
+                    Icons.search,
+                    color: Theme.of(context).primaryColor,
+                  )),
+              BottomNavigationBarItem(
+                  label: "Profile",
+                  icon: Icon(
+                    Icons.person,
+                    color: Theme.of(context).primaryColor,
+                  ))
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            }),
+        body: navTabs[_currentIndex]);
   }
 }
