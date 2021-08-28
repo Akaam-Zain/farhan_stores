@@ -20,87 +20,119 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CustomScrollView(slivers: [
-        SliverToBoxAdapter(
-          child: CarouselSlider(
-            options: CarouselOptions(
-              height: 250.0,
-              viewportFraction: 1,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-            ),
-            items: imgList.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      decoration: BoxDecoration(color: Colors.amber),
-                      child: Image.network(i, fit: BoxFit.cover, width: 100));
-                },
-              );
-            }).toList(),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Farhan Stores",
+          textAlign: TextAlign.center,
         ),
-        SliverPadding(
-          padding: EdgeInsets.all(25),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              child: Text("Categories"),
+        actions: [
+          IconButton(onPressed: () => {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () => {}, icon: Icon(Icons.notifications)),
+        ],
+      ),
+      body: Container(
+        child: CustomScrollView(slivers: [
+          SliverToBoxAdapter(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 250.0,
+                viewportFraction: 1,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+              ),
+              items: imgList.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 0),
+                        decoration: BoxDecoration(color: Colors.amber),
+                        child: Image.network(i, fit: BoxFit.cover, width: 100));
+                  },
+                );
+              }).toList(),
             ),
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.only(left: 30),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              height: 100.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 100.0,
-                    child: Card(
-                      child: Text('data'),
-                    ),
-                  );
-                },
+          SliverPadding(
+            padding: EdgeInsets.all(25),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                child: Text("Categories"),
               ),
             ),
           ),
-        ),
-        SliverFixedExtentList(
-          itemExtent: 50,
-          delegate: SliverChildListDelegate([
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Container(child: Text("Hellow")),
-              Container(child: Text("Hellow")),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 30),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                height: 100.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 100.0,
+                      child: Card(
+                        child: Text('data'),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          SliverFixedExtentList(
+            itemExtent: 50,
+            delegate: SliverChildListDelegate([
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                Container(child: Text("Hellow")),
+                Container(child: Text("Hellow")),
+              ]),
             ]),
-          ]),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.only(left: 30),
-          sliver: SliverToBoxAdapter(
-            child: Container(
-              height: 200.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 200.0,
-                    child: Card(
-                      child: Text('data'),
-                    ),
-                  );
-                },
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(left: 30),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                height: 200.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 200.0,
+                      child: Card(
+                        child: Text('data'),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
+    );
+  }
+}
+
+class HomeAppBar extends StatelessWidget {
+  const HomeAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        "Farhan Stores",
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        IconButton(onPressed: () => {}, icon: Icon(Icons.search)),
+        IconButton(onPressed: () => {}, icon: Icon(Icons.notifications)),
+      ],
     );
   }
 }
