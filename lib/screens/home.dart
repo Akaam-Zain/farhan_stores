@@ -11,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  hello() {}
+
   final List<Widget> navTabs = <Widget>[
     HomeWidget(),
     ShoppingCart(),

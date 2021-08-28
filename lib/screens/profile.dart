@@ -7,8 +7,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
-      ),
+          title: Text(
+            "Profile",
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+          backgroundColor: Colors.white),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
