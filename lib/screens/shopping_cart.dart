@@ -1,5 +1,6 @@
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ShoppingCart extends StatefulWidget {
   @override
@@ -156,10 +157,53 @@ footer(BuildContext context) {
                   primary: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => SummaryPage()));
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: new Icon(Icons.photo),
+                                title: new Text('Photo'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: new Icon(Icons.music_note),
+                                title: new Text('Music'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: new Icon(Icons.videocam),
+                                title: new Text('Video'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: new Icon(Icons.share),
+                                subtitle: Text("Jason"),
+                                title: new Text('Share'),
+                                trailing: Text("Edit"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ElevatedButton(
+                                onPressed: () => {},
+                                child: Text("Place Order"),
+                              ),
+                              SizedBox(height: 50)
+                            ],
+                          ),
+                        );
+                      });
                 },
                 label: Text(
                   "Checkout",
