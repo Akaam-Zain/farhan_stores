@@ -1,10 +1,9 @@
+import 'package:farhan_stores/screens/test.dart';
+import 'package:flutter/material.dart';
 import 'package:farhan_stores/controllers/controllers.dart';
 import 'package:farhan_stores/models/productsModel.dart';
-
 import 'screens.dart';
 import 'package:farhan_stores/widgets/home_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<Widget> navTabs = <Widget>[
-    HomeWidget(),
+    TestScreen(),
     ShoppingCart(),
     SearchScreen(),
     ProfileScreen(),
@@ -47,15 +46,27 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(child: FutureBuilder(
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            return ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return Container(child: Text(""));
-                });
-          },
-        )),
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: new CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: NetworkImage(
+                      'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q',
+                    ),
+                  )),
+              Drawer_ListTile(),
+              Drawer_ListTile(),
+              Drawer_ListTile(),
+            ],
+          ),
+        ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             fixedColor: Theme.of(context).primaryColor,
