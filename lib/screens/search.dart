@@ -1,4 +1,5 @@
 import 'package:farhan_stores/screens/note.dart';
+import 'package:farhan_stores/widgets/search_categories.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -42,43 +43,51 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
-      itemBuilder: (context, index) {
-        return index == 0 ? _searchBar() : _listItem(index - 1);
-      },
-      itemCount: _notesForDisplay.length + 1,
-    ));
+      body: Container(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            _searchBar(),
+            Flexible(
+              child: GridView.count(
+                  crossAxisCount: 4,
+                  children: List.generate(20, (index) {
+                    return Card(child: Text("Item 2"));
+                  })),
+            ),
+          ],
+        ),
+      ),
+    );
+    // index == 0 ? _searchBar() : _listItem(index - 1);
   }
 
   _searchBar() {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          margin: EdgeInsets.only(top: 30, left: 10, right: 10),
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.blueGrey[50],
-            border: Border.all(color: Colors.transparent), // set border width
-            borderRadius: BorderRadius.all(
-                Radius.circular(30.0)), // set rounded corner radius
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                border: InputBorder.none,
-              ),
-              onChanged: (text) {
-                text = text.toLowerCase();
-                setState(() {
-                  _notesForDisplay = _notes.where((note) {
-                    var noteTitle = note.title.toLowerCase();
-                    return noteTitle.contains(text);
-                  }).toList();
-                });
-              },
+    return Container(
+        margin: EdgeInsets.only(top: 50, left: 15, right: 15),
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.blueGrey[50],
+          border: Border.all(color: Colors.transparent), // set border width
+          borderRadius: BorderRadius.all(
+              Radius.circular(30.0)), // set rounded corner radius
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              border: InputBorder.none,
             ),
+            onChanged: (text) {
+              text = text.toLowerCase();
+              setState(() {
+                _notesForDisplay = _notes.where((note) {
+                  var noteTitle = note.title.toLowerCase();
+                  return noteTitle.contains(text);
+                }).toList();
+              });
+            },
           ),
         ));
   }

@@ -71,7 +71,50 @@ class OrderScreen extends StatelessWidget {
                     ]),
               ),
               body: TabBarView(children: [
-                Column(children: []),
+                ListView.builder(itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(children: [
+                      Card(
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Order No."),
+                                  Text("Order Date."),
+                                ],
+                              ),
+                              Text("Item"),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Quantity"),
+                                  Text("Total Amount"),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () => {},
+                                      child: Text("Details")),
+                                  Text('Delivered'),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
+                  );
+                }),
                 Icon(Icons.movie),
                 Icon(Icons.games),
               ]),

@@ -1,6 +1,7 @@
-import 'package:farhan_stores/screens/screens.dart';
+import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatefulWidget {
   @override
@@ -10,31 +11,37 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
+    List<Product> cart_list = context.watch<Cart>().getProductList;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
       body: Builder(
         builder: (context) {
-          return ListView(
-            children: <Widget>[createCartList(), footer(context)],
-          );
+          return cart_list.isEmpty
+              ? Center(child: Text("Cart is empty"))
+              : ListView(
+                  children: <Widget>[
+                    createCartList(context, cart_list),
+                    footer(context)
+                  ],
+                );
         },
       ),
     );
   }
 
-  createCartList() {
+  createCartList(BuildContext context, cart_list) {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemBuilder: (context, position) {
-        return createCartListItem();
+      itemBuilder: (context, index) {
+        return createCartListItem(context, cart_list, index);
       },
-      itemCount: 3,
+      itemCount: cart_list.length,
     );
   }
 
-  createCartListItem() {
+  createCartListItem(BuildContext context, cart_list, index) {
     return Stack(
       children: <Widget>[
         Container(
@@ -47,14 +54,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
           child: Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(right: 8, left: 8, top: 8, bottom: 8),
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"))),
-              ),
+                  margin: EdgeInsets.only(right: 8, left: 8, top: 8, bottom: 8),
+                  width: 100,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://farhan-stores.herokuapp.com/uploads/' +
+                                  cart_list[index].productImage)))),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
@@ -62,11 +69,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Text(""),
                       Container(
                         padding: EdgeInsets.only(right: 8, top: 4),
                         child: Text(
-                          "Anchor Full Cream",
-                          maxLines: 2,
+                          cart_list[index].productName,
                           softWrap: true,
                         ),
                       ),
@@ -126,7 +133,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
               icon: Icon(Icons.delete),
               color: Colors.red,
               iconSize: 20,
-              onPressed: () => {print("delete clicked")},
+              onPressed: () => {
+                context.read<Cart>().removeFromCart(cart_list[0]),
+              },
             ),
           ),
         )
@@ -166,34 +175,64 @@ footer(BuildContext context) {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: new Icon(Icons.photo),
-                                title: new Text('Photo'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                leading: new Icon(Icons.music_note),
-                                title: new Text('Music'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                leading: new Icon(Icons.videocam),
-                                title: new Text('Video'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                leading: new Icon(Icons.share),
-                                subtitle: Text("Jason"),
-                                title: new Text('Share'),
+                                leading: new Icon(Icons.person),
+                                title: const Text('Customer Name'),
+                                subtitle: const Text("Jason Holder"),
                                 trailing: Text("Edit"),
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
+                              ),
+                              ListTile(
+                                leading: new Icon(Icons.location_pin),
+                                title: const Text('Delivery Address'),
+                                subtitle:
+                                    const Text("419/1 Waragashinna, New York "),
+                                trailing: Text("Edit"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: new Icon(Icons.phone),
+                                title: const Text('Phone No.'),
+                                subtitle: const Text("+9477 016 1414"),
+                                trailing: Text("Edit"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Subtotal"),
+                                        Text("Rs.2000")
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Subtotal"),
+                                        Text("Rs.2000")
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Subtotal"),
+                                        Text("Rs.2000")
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                               ElevatedButton(
                                 onPressed: () => {},

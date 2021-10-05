@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<Widget> navTabs = <Widget>[
-    TestScreen(),
+    HomeWidget(),
     ShoppingCart(),
     SearchScreen(),
     ProfileScreen(),

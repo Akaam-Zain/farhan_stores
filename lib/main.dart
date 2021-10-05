@@ -1,14 +1,21 @@
 import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/cart_provider.dart';
 import 'package:farhan_stores/providers/counter_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/widgets.dart';
 
 void main() {
   runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => Counter())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => Counter(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Cart(),
+        ),
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

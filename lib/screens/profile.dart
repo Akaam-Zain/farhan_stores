@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import './screens.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<String> _listItems = ["My Orders", "Delivery Address", "Contact"];
+
+    List _screenList = [
+      OrderScreen(),
+      DeliveryDetails(),
+      ContactDetails(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -30,16 +39,27 @@ class ProfileScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 4,
+                  itemCount: _listItems.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            title: Text("My Orders"),
-                            subtitle: Text("2 addresses"),
-                            trailing: Icon(Icons.arrow_forward_ios),
+                          child: InkWell(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => _screenList[index]),
+                                );
+                              },
+                              child: ListTile(
+                                title: Text(_listItems[index]),
+                                subtitle: Text("2 addresses"),
+                                trailing: Icon(Icons.arrow_forward_ios),
+                              ),
+                            ),
                           ),
                         ),
                         Divider(

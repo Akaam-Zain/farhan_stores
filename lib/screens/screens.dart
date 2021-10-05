@@ -5,3 +5,5 @@ export 'summary_screen.dart';
 export 'search.dart';
 export 'profile.dart';
 export 'order.dart';
+export 'delivery_address_screen.dart';
+export 'contact_details.dart';
