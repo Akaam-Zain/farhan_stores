@@ -7,6 +7,10 @@ class ShoppingCartProvider with ChangeNotifier {
   int get count => _cartList.length;
   List<Product> get cartList => _cartList;
 
+  //Getter for total
+
+  //Getter for Quantity
+
   void addToCart(Product selectedProduct) {
     _cartList.add(selectedProduct);
     notifyListeners();

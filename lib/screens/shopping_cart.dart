@@ -1,3 +1,4 @@
+import 'package:farhan_stores/controllers/place_order.dart';
 import 'package:farhan_stores/models/productsModel.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
 import 'package:farhan_stores/screens/screens.dart';
@@ -24,7 +25,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
             children: <Widget>[
               createCartList(
                   context, context.watch<ShoppingCartProvider>().cartList),
-              footer(context)
+              footer(context, cartList)
             ],
           );
         },
@@ -150,7 +151,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
   }
 }
 
-footer(BuildContext context) {
+footer(BuildContext context, List<Product> cartlist) {
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Container(
@@ -181,37 +182,27 @@ footer(BuildContext context) {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: new Icon(Icons.photo),
-                                title: new Text('Photo'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
+                                  leading: new Icon(Icons.person),
+                                  title: new Text('Reciever Name'),
+                                  subtitle: new Text("Jason")),
                               ListTile(
-                                leading: new Icon(Icons.music_note),
-                                title: new Text('Music'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
+                                  leading: new Icon(Icons.pin_drop),
+                                  title: new Text('Address'),
+                                  subtitle:
+                                      new Text("102, 6th Street, Madawala")),
                               ListTile(
-                                leading: new Icon(Icons.videocam),
-                                title: new Text('Video'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                leading: new Icon(Icons.share),
-                                subtitle: Text("Jason"),
-                                title: new Text('Share'),
-                                trailing: Text("Edit"),
+                                leading: new Icon(Icons.phone),
+                                title: new Text('Phone'),
+                                subtitle: new Text('077XXXXXXX'),
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
                               ),
                               ElevatedButton(
-                                onPressed: () => {},
+                                onPressed: () {
+                                  PlaceOrder(
+                                      "customerId", 2000.00, 2500.00, cartlist);
+                                },
                                 child: Text("Place Order"),
                               ),
                               SizedBox(height: 50)
