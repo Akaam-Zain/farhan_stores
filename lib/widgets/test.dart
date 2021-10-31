@@ -3,8 +3,8 @@ import 'package:farhan_stores/controllers/productsHandler.dart';
 import 'package:farhan_stores/models/productsModel.dart';
 import 'package:flutter/material.dart';
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+class TestWidget extends StatelessWidget {
+  const TestWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

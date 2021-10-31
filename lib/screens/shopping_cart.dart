@@ -7,6 +7,8 @@ class ShoppingCart extends StatefulWidget {
   _ShoppingCartState createState() => _ShoppingCartState();
 }
 
+List cartList = [];
+
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
@@ -16,14 +18,18 @@ class _ShoppingCartState extends State<ShoppingCart> {
       body: Builder(
         builder: (context) {
           return ListView(
-            children: <Widget>[createCartList(), footer(context)],
+            children: <Widget>[
+              createCartList(context, cartList),
+              footer(context)
+            ],
           );
         },
       ),
     );
   }
 
-  createCartList() {
+  createCartList(BuildContext context, cart_list) {
+    print('test');
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
