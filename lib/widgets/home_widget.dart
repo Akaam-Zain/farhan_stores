@@ -33,12 +33,17 @@ class HomeWidget extends StatelessWidget {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        width: 200.0,
-                        child: Card(
-                          child: Image.network(
-                              "https://farhan-stores.herokuapp.com/uploads/" +
-                                  snapshot.data![index].productImage),
-                        ),
+                        child: Row(children: [
+                          IconButton(
+                            icon: Icon(Icons.shopping_bag),
+                            onPressed: () {},
+                          ),
+                          Image.network(
+                            "https://farhan-stores.herokuapp.com/uploads/" +
+                                snapshot.data![index].productImage,
+                            width: 150,
+                          ),
+                        ]),
                       );
                     },
                   ),
