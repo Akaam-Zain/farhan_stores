@@ -1,17 +1,20 @@
+import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/shopping_cart_provider.dart';
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatefulWidget {
   @override
   _ShoppingCartState createState() => _ShoppingCartState();
 }
 
-List cartList = [];
-
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
+    List<Product> cartList = context.watch<ShoppingCartProvider>().cartList;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
@@ -19,7 +22,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
         builder: (context) {
           return ListView(
             children: <Widget>[
-              createCartList(context, cartList),
+              createCartList(
+                  context, context.watch<ShoppingCartProvider>().cartList),
               footer(context)
             ],
           );
@@ -33,14 +37,14 @@ class _ShoppingCartState extends State<ShoppingCart> {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemBuilder: (context, position) {
-        return createCartListItem();
+      itemBuilder: (context, index) {
+        return createCartListItem(cart_list, index);
       },
-      itemCount: 3,
+      itemCount: cart_list.length,
     );
   }
 
-  createCartListItem() {
+  createCartListItem(List<Product> cart_list, int index) {
     return Stack(
       children: <Widget>[
         Container(
@@ -59,7 +63,8 @@ class _ShoppingCartState extends State<ShoppingCart> {
                     borderRadius: BorderRadius.all(Radius.circular(14)),
                     image: DecorationImage(
                         image: NetworkImage(
-                            "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80"))),
+                            "https://farhan-stores.herokuapp.com/uploads/" +
+                                cart_list[index].productImage))),
               ),
               Expanded(
                 child: Container(
@@ -71,13 +76,13 @@ class _ShoppingCartState extends State<ShoppingCart> {
                       Container(
                         padding: EdgeInsets.only(right: 8, top: 4),
                         child: Text(
-                          "Anchor Full Cream",
+                          cart_list[index].productName,
                           maxLines: 2,
                           softWrap: true,
                         ),
                       ),
                       Text(
-                        "Unit Price",
+                        "Rs. " + cart_list[index].productPrice,
                       ),
                       Container(
                         child: Row(
@@ -132,7 +137,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
               icon: Icon(Icons.delete),
               color: Colors.red,
               iconSize: 20,
-              onPressed: () => {print("delete clicked")},
+              onPressed: () => {
+                context
+                    .read<ShoppingCartProvider>()
+                    .removeFromCart(cart_list[index].id)
+              },
             ),
           ),
         )

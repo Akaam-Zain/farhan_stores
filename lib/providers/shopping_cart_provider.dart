@@ -1,11 +1,20 @@
+import 'package:farhan_stores/models/productsModel.dart';
 import 'package:flutter/material.dart';
 
-class ShoppingCart with ChangeNotifier {
-  int _count = 0;
+class ShoppingCartProvider with ChangeNotifier {
+  List<Product> _cartList = [];
 
-  int get count => _count;
+  int get count => _cartList.length;
+  List<Product> get cartList => _cartList;
 
-  void increment() {
-    _count++;
+  void addToCart(Product selectedProduct) {
+    _cartList.add(selectedProduct);
+    notifyListeners();
+    print("increment is called");
+  }
+
+  void removeFromCart(String productId) {
+    _cartList.removeWhere((item) => item.id == productId);
+    notifyListeners();
   }
 }

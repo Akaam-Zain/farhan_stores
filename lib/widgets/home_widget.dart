@@ -1,11 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:farhan_stores/controllers/productsHandler.dart';
 import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/shopping_cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeWidget extends StatelessWidget {
+class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
 
+  @override
+  _HomeWidgetState createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     ProductsHandler productsHandler = new ProductsHandler();
@@ -36,13 +43,21 @@ class HomeWidget extends StatelessWidget {
                         child: Row(children: [
                           IconButton(
                             icon: Icon(Icons.shopping_bag),
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<ShoppingCartProvider>()
+                                  .addToCart(snapshot.data![index]);
+                            },
                           ),
                           Image.network(
                             "https://farhan-stores.herokuapp.com/uploads/" +
                                 snapshot.data![index].productImage,
                             width: 150,
                           ),
+                          Text(context
+                              .watch<ShoppingCartProvider>()
+                              .count
+                              .toString())
                         ]),
                       );
                     },
@@ -80,7 +95,6 @@ class HomeWidget extends StatelessWidget {
                   }).toList(),
                 ),
               ),
-
               SliverPadding(
                 padding: EdgeInsets.all(25),
                 sliver: SliverToBoxAdapter(
@@ -109,7 +123,6 @@ class HomeWidget extends StatelessWidget {
                   ),
                 ),
               ),
-
               SliverFixedExtentList(
                 itemExtent: 50,
                 delegate: SliverChildListDelegate([
