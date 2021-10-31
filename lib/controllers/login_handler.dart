@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<bool> AuthorizeLogin(String title, String password) async {
+Future<String> AuthorizeLogin(String title, String password) async {
   final response = await http.post(
     Uri.parse('https://farhan-stores.herokuapp.com/user/login'),
     headers: <String, String>{
@@ -12,11 +12,13 @@ Future<bool> AuthorizeLogin(String title, String password) async {
   );
 
   print(response);
+
   if (response.statusCode == 200) {
-    print("Customer");
-    return true;
+    var result = jsonDecode(response.body);
+    var userId = (result['customer']);
+    return userId;
   } else {
     print("error");
-    return false;
+    return "";
   }
 }

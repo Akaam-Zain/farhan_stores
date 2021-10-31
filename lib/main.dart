@@ -1,4 +1,6 @@
+import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
+import 'package:farhan_stores/providers/user_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,11 @@ import '../widgets/widgets.dart';
 
 void main() {
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => ShoppingCartProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => ShoppingCartProvider()),
+      ChangeNotifierProvider(create: (_) => ProductsProvider()),
+      ChangeNotifierProvider(create: (_) => UserProvider())
+    ],
     child: MyApp(),
   ));
 }

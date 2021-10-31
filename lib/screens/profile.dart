@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                         Divider(
                           thickness: 1,
                           height: 1,
-                        )
+                        ),
                       ],
                     );
                   }),

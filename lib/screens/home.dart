@@ -1,11 +1,12 @@
 import 'package:farhan_stores/controllers/controllers.dart';
 import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/widgets/test.dart';
-
 import 'screens.dart';
 import 'package:farhan_stores/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,12 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static get productsHandler => new ProductsHandler();
-  List<Future<Product>> products = [];
+  List<Product> products = [];
 
   @override
   void initState() {
     // TODO: implement initState
-    productsHandler.fetchProducts();
 
     productsHandler.fetchProducts().then((data) {
       setState(() {
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         if (products == null) {
           print("NULL");
         } else {
-          // print(products);
+          print(products);
         }
       });
     });
@@ -47,6 +47,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ProductsProvider>().storeProducts(products);
+
     return Scaffold(
         drawer: Drawer(child: FutureBuilder(
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {

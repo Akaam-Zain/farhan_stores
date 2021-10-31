@@ -32,10 +32,10 @@ class Product {
         "_id": id,
         "product_name": productName,
         "product_price": productPrice,
-        "product_description": productDescription,
-        "product_image": productImage,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
+        // "product_description": productDescription,
+        // "product_image": productImage,
+        // "createdAt": createdAt.toIso8601String(),
+        // "updatedAt": updatedAt.toIso8601String(),
+        // "__v": v,
       };
 }

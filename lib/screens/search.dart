@@ -1,7 +1,10 @@
+import 'package:farhan_stores/models/productsModel.dart';
+import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/screens/note.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -9,34 +12,15 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<Note> _notes = <Note>[];
-  List<Note> _notesForDisplay = <Note>[];
-
-  Future<List<Note>> fetchNotes() async {
-    var url =
-        'https://raw.githubusercontent.com/boriszv/json/master/random_example.json';
-    var response = await http.get(Uri.parse(url));
-
-    var notes = <Note>[];
-
-    if (response.statusCode == 200) {
-      var notesJson = json.decode(response.body);
-      for (var noteJson in notesJson) {
-        notes.add(Note.fromJson(noteJson));
-      }
-    }
-    return notes;
-  }
+  List<Product> _products = [];
+  List<Product> _filteredProducts = [];
 
   @override
   void initState() {
-    fetchNotes().then((value) {
-      setState(() {
-        _notes.addAll(value);
-        _notesForDisplay = _notes;
-      });
-    });
     super.initState();
+    _products =
+        Provider.of<ProductsProvider>(context, listen: false).getAllProducts;
+    _filteredProducts = _products;
   }
 
   @override
@@ -44,13 +28,15 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
         body: ListView.builder(
       itemBuilder: (context, index) {
-        return index == 0 ? _searchBar() : _listItem(index - 1);
+        return index == 0
+            ? _searchBar(_products, _filteredProducts)
+            : _listItem(_filteredProducts, index - 1);
       },
-      itemCount: _notesForDisplay.length + 1,
+      itemCount: _products.length + 1,
     ));
   }
 
-  _searchBar() {
+  _searchBar(List<Product> _products, List<Product> _filteredProducts) {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
@@ -72,10 +58,10 @@ class _SearchScreenState extends State<SearchScreen> {
               onChanged: (text) {
                 text = text.toLowerCase();
                 setState(() {
-                  _notesForDisplay = _notes.where((note) {
-                    var noteTitle = note.title.toLowerCase();
-                    return noteTitle.contains(text);
-                  }).toList();
+                  _filteredProducts = _products
+                      .where((item) =>
+                          item.productName.toLowerCase().contains(text))
+                      .toList();
                 });
               },
             ),
@@ -83,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ));
   }
 
-  _listItem(index) {
+  _listItem(List<Product> filteredList, int index) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -92,11 +78,11 @@ class _SearchScreenState extends State<SearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              _notesForDisplay[index].title,
+              filteredList[index].productName,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             Text(
-              _notesForDisplay[index].text,
+              filteredList[index].productPrice,
               style: TextStyle(color: Colors.grey.shade600),
             ),
           ],

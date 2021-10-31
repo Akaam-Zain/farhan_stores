@@ -12,12 +12,6 @@ Future<bool> PlaceOrder(
   double total,
   List<Product> productList,
 ) async {
-  productList.map((e) {
-    product_name = e.productName;
-    product_price = double.parse(e.productPrice);
-    product_name = e.productName;
-  });
-
   final response = await http.post(
     Uri.parse('https://farhan-stores.herokuapp.com/user-view/placeOrder'),
     headers: <String, String>{
@@ -29,16 +23,13 @@ Future<bool> PlaceOrder(
         'subTotal': 2000,
         'total': 2500,
         'products': [
-          {
-            "productId": product_id,
-            "productName": product_name,
-            "price": product_price
-          }
+          {jsonEncode(productList)}
         ]
       }
     }),
   );
 
+  print(product_id);
   print(response);
   if (response.statusCode == 200) {
     print("Order Placed");

@@ -1,8 +1,10 @@
 import 'package:farhan_stores/controllers/login_handler.dart';
+import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginIn extends StatefulWidget {
   const LoginIn({Key? key}) : super(key: key);
@@ -60,7 +62,11 @@ class _LoginInState extends State<LoginIn> {
                             btnOnPressed: () async {
                               final response =
                                   await AuthorizeLogin("", "password");
-                              if (response == true) {
+                              if (response == "") {
+                                setState(() {
+                                  loginStatus = false;
+                                });
+                              } else {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -68,10 +74,6 @@ class _LoginInState extends State<LoginIn> {
                                 );
                                 setState(() {
                                   loginStatus = true;
-                                });
-                              } else {
-                                setState(() {
-                                  loginStatus = false;
                                 });
                               }
                             }),
