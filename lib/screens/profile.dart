@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  ProfileScreen({Key? key}) : super(key: key);
+
+  List<String> sectionItems = ["My Orders", "Delivery Address", "Contact"];
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,15 @@ class ProfileScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 4,
+                  itemCount: sectionItems.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
-                            title: Text("My Orders"),
-                            subtitle: Text("2 addresses"),
+                            title: Text(sectionItems[index]),
+                            // subtitle: Text("2 addresses"),
                             trailing: Icon(Icons.arrow_forward_ios),
                           ),
                         ),

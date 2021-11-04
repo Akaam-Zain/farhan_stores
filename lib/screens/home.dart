@@ -50,15 +50,6 @@ class _HomePageState extends State<HomePage> {
     context.read<ProductsProvider>().storeProducts(products);
 
     return Scaffold(
-        drawer: Drawer(child: FutureBuilder(
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            return ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return Container(child: Text(""));
-                });
-          },
-        )),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             fixedColor: Theme.of(context).primaryColor,

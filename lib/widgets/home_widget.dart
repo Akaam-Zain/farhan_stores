@@ -25,6 +25,42 @@ class _HomeWidgetState extends State<HomeWidget> {
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
     ];
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Farhan Stores"),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       body: FutureBuilder<List<Product>>(
         future: productsHandler.fetchProducts(),
         builder: (context, snapshot) {
@@ -44,6 +80,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           IconButton(
                             icon: Icon(Icons.shopping_bag),
                             onPressed: () {
+                              final snackBar = SnackBar(
+                                  content: const Text('Added to cart!'),
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor);
+
+                              // Find the ScaffoldMessenger in the widget tree
+                              // and use it to show a SnackBar.
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                               context
                                   .read<ShoppingCartProvider>()
                                   .addToCart(snapshot.data![index]);

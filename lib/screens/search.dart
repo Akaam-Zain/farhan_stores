@@ -20,7 +20,6 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     _products =
         Provider.of<ProductsProvider>(context, listen: false).getAllProducts;
-    _filteredProducts = _products;
   }
 
   @override
@@ -28,48 +27,58 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
         body: ListView.builder(
       itemBuilder: (context, index) {
-        return index == 0
-            ? _searchBar(_products, _filteredProducts)
-            : _listItem(_filteredProducts, index - 1);
+        return index == 0 ? _searchBar() : _listItem(index - 1);
       },
-      itemCount: _products.length + 1,
+      itemCount: _filteredProducts.length + 1,
     ));
   }
 
-  _searchBar(List<Product> _products, List<Product> _filteredProducts) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          margin: EdgeInsets.only(top: 30, left: 10, right: 10),
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.blueGrey[50],
-            border: Border.all(color: Colors.transparent), // set border width
-            borderRadius: BorderRadius.all(
-                Radius.circular(30.0)), // set rounded corner radius
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                border: InputBorder.none,
+  _searchBar() {
+    return Column(
+      children: [
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              margin: EdgeInsets.only(top: 30, left: 10, right: 10),
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[50],
+                border:
+                    Border.all(color: Colors.transparent), // set border width
+                borderRadius: BorderRadius.all(
+                    Radius.circular(30.0)), // set rounded corner radius
               ),
-              onChanged: (text) {
-                text = text.toLowerCase();
-                setState(() {
-                  _filteredProducts = _products
-                      .where((item) =>
-                          item.productName.toLowerCase().contains(text))
-                      .toList();
-                });
-              },
-            ),
-          ),
-        ));
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (text) {
+                    if (text == "") {
+                      setState(() {
+                        _filteredProducts.clear();
+                      });
+                    } else {
+                      text = text.toLowerCase();
+
+                      setState(() {
+                        _filteredProducts = _products
+                            .where((item) =>
+                                item.productName.toLowerCase().contains(text))
+                            .toList();
+                      });
+                    }
+                  },
+                ),
+              ),
+            )),
+      ],
+    );
   }
 
-  _listItem(List<Product> filteredList, int index) {
+  _listItem(int index) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -78,11 +87,11 @@ class _SearchScreenState extends State<SearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              filteredList[index].productName,
+              _filteredProducts[index].productName,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             Text(
-              filteredList[index].productPrice,
+              _filteredProducts[index].productPrice,
               style: TextStyle(color: Colors.grey.shade600),
             ),
           ],

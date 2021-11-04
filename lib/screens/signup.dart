@@ -1,10 +1,17 @@
+import 'package:farhan_stores/screens/screens.dart';
 import 'package:farhan_stores/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:farhan_stores/controllers/signup_handler.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +66,24 @@ class SignUp extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 50.0),
                         child: ButtonLarge(
                           btnText: "Sign Up",
-                          btnOnPressed: () => {print("Sign Up Button Pressed")},
+                          btnOnPressed: () async {
+                            final response = await SignUpUserHandler(
+                                "userName", "email", "password", "address");
+                            if (response == "") {
+                              setState(() {
+                                // loginStatus = false;
+                              });
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                              setState(() {
+                                // loginStatus = true;
+                              });
+                            }
+                          },
                         ),
                       ),
                       Container(
@@ -75,7 +99,11 @@ class SignUp extends StatelessWidget {
                                     style: TextStyle(color: Colors.blueAccent),
                                     recognizer: new TapGestureRecognizer()
                                       ..onTap = () {
-                                        debugPrint("Gesture detected");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginIn()));
                                       },
                                   )
                                 ]),

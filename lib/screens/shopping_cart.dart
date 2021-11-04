@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:farhan_stores/controllers/place_order.dart';
 import 'package:farhan_stores/models/productsModel.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
-import 'package:farhan_stores/screens/screens.dart';
-import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -152,78 +152,92 @@ class _ShoppingCartState extends State<ShoppingCart> {
 }
 
 footer(BuildContext context, List<Product> cartlist) {
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 30),
-                child: Text(
-                  "Total \$299.00",
+  if (cartlist.length != 0) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(right: 30),
+                  child: Text(
+                    "Total \$299.00",
+                  ),
                 ),
-              ),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).primaryColor,
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                    leading: new Icon(Icons.person),
+                                    title: new Text('Reciever Name'),
+                                    subtitle: new Text("Jason")),
+                                ListTile(
+                                    leading: new Icon(Icons.pin_drop),
+                                    title: new Text('Address'),
+                                    subtitle:
+                                        new Text("102, 6th Street, Madawala")),
+                                ListTile(
+                                  leading: new Icon(Icons.phone),
+                                  title: new Text('Phone'),
+                                  subtitle: new Text('077XXXXXXX'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    PlaceOrder("customerId", 2000.00, 2500.00,
+                                        cartlist);
+                                  },
+                                  child: Text("Place Order"),
+                                ),
+                                SizedBox(height: 50)
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  label: Text(
+                    "Checkout",
+                  ),
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                  ),
                 ),
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              ListTile(
-                                  leading: new Icon(Icons.person),
-                                  title: new Text('Reciever Name'),
-                                  subtitle: new Text("Jason")),
-                              ListTile(
-                                  leading: new Icon(Icons.pin_drop),
-                                  title: new Text('Address'),
-                                  subtitle:
-                                      new Text("102, 6th Street, Madawala")),
-                              ListTile(
-                                leading: new Icon(Icons.phone),
-                                title: new Text('Phone'),
-                                subtitle: new Text('077XXXXXXX'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  PlaceOrder(
-                                      "customerId", 2000.00, 2500.00, cartlist);
-                                },
-                                child: Text("Place Order"),
-                              ),
-                              SizedBox(height: 50)
-                            ],
-                          ),
-                        );
-                      });
-                },
-                label: Text(
-                  "Checkout",
-                ),
-                icon: Icon(
-                  Icons.arrow_forward_ios,
-                  size: 15,
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
+        margin: EdgeInsets.only(top: 16),
       ),
-      margin: EdgeInsets.only(top: 16),
-    ),
-  );
+    );
+  } else {
+    return Expanded(
+      child: Container(
+        height: MediaQuery.of(context).size.height - 100,
+        child: Center(
+          child: Text(
+            "Cart is empty!",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
 }

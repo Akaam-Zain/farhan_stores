@@ -71,7 +71,78 @@ class OrderScreen extends StatelessWidget {
                     ]),
               ),
               body: TabBarView(children: [
-                Column(children: []),
+                Container(
+                  color: Colors.yellow,
+                  child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      color: Colors.red,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          ),
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          )
+                                        ],
+                                      )),
+                                  Container(
+                                      color: Colors.red,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          ),
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          )
+                                        ],
+                                      )),
+                                  Container(
+                                      color: Colors.red,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                      color: Colors.red,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            color: Colors.red,
+                                            child: Text("Order No. "),
+                                          ),
+                                        ],
+                                      )),
+                                  SizedBox(
+                                    height: 20,
+                                  )
+                                ]);
+                          })),
+                ),
                 Icon(Icons.movie),
                 Icon(Icons.games),
               ]),
