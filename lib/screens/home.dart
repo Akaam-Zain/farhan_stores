@@ -103,23 +103,3 @@ class Drawer_ListTile extends StatelessWidget {
     );
   }
 }
-
-
-
-  // return Column(
-  //             children: [
-  //               DrawerHeader(
-  //                   decoration: BoxDecoration(
-  //                     color: Theme.of(context).primaryColor,
-  //                   ),
-  //                   child: new CircleAvatar(
-  //                     radius: 20.0,
-  //                     backgroundImage:
-  //                         NetworkImage(products[index].productImage),
-  //                   )),
-  //               Text(products[index].productPrice),
-  //               Drawer_ListTile(),
-  //               Drawer_ListTile(),
-  //               Drawer_ListTile(),
-  //             ],
-  //           );

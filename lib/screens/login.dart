@@ -1,10 +1,12 @@
 import 'package:farhan_stores/controllers/login_handler.dart';
 import 'package:farhan_stores/providers/products_provider.dart';
+import 'package:farhan_stores/providers/user_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class LoginIn extends StatefulWidget {
   const LoginIn({Key? key}) : super(key: key);
@@ -60,13 +62,19 @@ class _LoginInState extends State<LoginIn> {
                         child: ButtonLarge(
                             btnText: "Login ",
                             btnOnPressed: () async {
-                              final response =
+                              final currentUser =
                                   await AuthorizeLogin("", "password");
-                              if (response == "") {
+                              if (currentUser.customer.userUsername == "" ||
+                                  currentUser.customer.userUsername.isEmpty) {
                                 setState(() {
                                   loginStatus = false;
                                 });
                               } else {
+                                context
+                                    .read<UserProvider>()
+                                    .storeUser(currentUser);
+                                await FlutterSession()
+                                    .set("token", currentUser);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

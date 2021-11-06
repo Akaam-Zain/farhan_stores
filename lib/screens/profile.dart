@@ -1,4 +1,8 @@
+import 'package:farhan_stores/providers/user_provider.dart';
+import 'package:farhan_stores/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -13,6 +17,16 @@ class ProfileScreen extends StatelessWidget {
             "Profile",
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await FlutterSession().set("token", "");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginIn()));
+              },
+              child: Text("Logout"),
+            )
+          ],
           backgroundColor: Colors.white),
       body: Container(
         child: Column(
@@ -23,12 +37,20 @@ class ProfileScreen extends StatelessWidget {
               child: CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.red,
+                backgroundImage: NetworkImage(
+                    "https://farhan-stores.herokuapp.com/uploads/user_pro_pic/" +
+                        context
+                            .watch<UserProvider>()
+                            .currentUser
+                            .customer
+                            .userImage),
               ),
             ),
             Text("Akaam Zain"),
             Padding(
               padding: const EdgeInsets.only(bottom: 30.0),
-              child: Text("akaamzain@hotmail.com"),
+              child: Text(
+                  context.watch<UserProvider>().currentUser.customer.userEmail),
             ),
             Expanded(
               child: ListView.builder(

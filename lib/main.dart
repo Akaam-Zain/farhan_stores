@@ -4,22 +4,29 @@ import 'package:farhan_stores/providers/user_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:provider/provider.dart';
 import '../widgets/widgets.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  dynamic token = FlutterSession().get('token');
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ShoppingCartProvider()),
       ChangeNotifierProvider(create: (_) => ProductsProvider()),
       ChangeNotifierProvider(create: (_) => UserProvider())
     ],
-    child: MyApp(),
+    child: MyApp(
+      token: token,
+    ),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final token;
+  const MyApp({Key? key, @required this.token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,6 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Roboto'),
           ),
         ),
-        home: HomePage()));
+        home: token != '' ? HomePage() : HomePage()));
   }
 }

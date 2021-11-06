@@ -34,11 +34,16 @@ class _HomeWidgetState extends State<HomeWidget> {
           padding: EdgeInsets.zero,
 
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.red,
               ),
-              child: Text('Drawer Header'),
+              child: new CircleAvatar(
+                radius: 10.0,
+                backgroundColor: const Color(0xFF778899),
+                backgroundImage:
+                    NetworkImage("Your Photo Url"), // for Network image
+              ),
             ),
             ListTile(
               title: const Text('Item 1'),
@@ -70,39 +75,60 @@ class _HomeWidgetState extends State<HomeWidget> {
               padding: EdgeInsets.only(left: 30),
               sliver: SliverToBoxAdapter(
                 child: Container(
-                  height: 200.0,
+                  height: 220.0,
+                  width: 500,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return Container(
                         child: Row(children: [
-                          IconButton(
-                            icon: Icon(Icons.shopping_bag),
-                            onPressed: () {
-                              final snackBar = SnackBar(
-                                  content: const Text('Added to cart!'),
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor);
+                          Container(
+                              margin:
+                                  new EdgeInsets.symmetric(horizontal: 10.0),
+                              color: Colors.white,
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      color: Colors.red,
+                                      child: IconButton(
+                                        alignment: Alignment.centerRight,
+                                        icon: Icon(Icons.shopping_bag),
+                                        onPressed: () {
+                                          final snackBar = SnackBar(
+                                              content:
+                                                  const Text('Added to cart!'),
+                                              backgroundColor: Theme.of(context)
+                                                  .primaryColor);
 
-                              // Find the ScaffoldMessenger in the widget tree
-                              // and use it to show a SnackBar.
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                              context
-                                  .read<ShoppingCartProvider>()
-                                  .addToCart(snapshot.data![index]);
-                            },
-                          ),
-                          Image.network(
-                            "https://farhan-stores.herokuapp.com/uploads/" +
-                                snapshot.data![index].productImage,
-                            width: 150,
-                          ),
-                          Text(context
-                              .watch<ShoppingCartProvider>()
-                              .count
-                              .toString())
+                                          // Find the ScaffoldMessenger in the widget tree
+                                          // and use it to show a SnackBar.
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                          context
+                                              .read<ShoppingCartProvider>()
+                                              .addToCart(snapshot.data![index]);
+                                        },
+                                      ),
+                                    ),
+                                    Image.network(
+                                      "https://farhan-stores.herokuapp.com/uploads/" +
+                                          snapshot.data![index].productImage,
+                                      width: 120,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(snapshot.data![index].productName),
+                                        Text(snapshot.data![index].productPrice,
+                                            textAlign: TextAlign.start),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ))
                         ]),
                       );
                     },
@@ -141,15 +167,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.all(25),
+                padding: EdgeInsets.only(top: 15, left: 25, bottom: 10),
                 sliver: SliverToBoxAdapter(
                   child: Container(
-                    child: Text("Categories"),
+                    child: Text("Categories",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.only(left: 30),
+                padding: EdgeInsets.only(left: 20),
                 sliver: SliverToBoxAdapter(
                   child: Container(
                     height: 100.0,
@@ -160,7 +188,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                         return Container(
                           width: 100.0,
                           child: Card(
-                            child: Text('data'),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.network(
+                                      "https://www.iconsdb.com/icons/preview/red/milk-2-xxl.png",
+                                      width: 50),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      "Essentials",
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  )
+                                ]),
                           ),
                         );
                       },
@@ -172,10 +214,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                 itemExtent: 50,
                 delegate: SliverChildListDelegate([
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(child: Text("Hellow")),
-                        Container(child: Text("Hellow")),
+                        Container(child: Text("Frequently Purchased")),
+                        Container(child: Text("View All >")),
                       ]),
                 ]),
               ),

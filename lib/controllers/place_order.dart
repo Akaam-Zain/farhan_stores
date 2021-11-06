@@ -20,10 +20,10 @@ Future<bool> PlaceOrder(
     body: jsonEncode({
       "order": {
         'customerId': "6125d1696eb5a13628199f28",
-        'subTotal': 2000,
-        'total': 2500,
+        'subTotal': 100000,
+        'total': 100000,
         'products': [
-          {jsonEncode(productList)}
+          {"productId": "", "productName": "Cadbury", "price": 800}
         ]
       }
     }),
