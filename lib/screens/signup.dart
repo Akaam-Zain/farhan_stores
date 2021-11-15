@@ -1,3 +1,4 @@
+import 'package:farhan_stores/models/userModel.dart';
 import 'package:farhan_stores/screens/screens.dart';
 import 'package:farhan_stores/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -12,6 +13,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  Customer register_Customer = new Customer(
+      userUsername: "",
+      userEmail: "",
+      userPassword: "",
+      userAddress: "",
+      userPhoneNo: 0,
+      userImage: "");
+  final textControllerUserName = TextEditingController();
+  final textControllerEmail = TextEditingController();
+  final textControllerPass = TextEditingController();
+  final textControllerComPass = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,38 +50,66 @@ class _SignUpState extends State<SignUp> {
                   padding: const EdgeInsets.fromLTRB(40, 30, 40, 0),
                   child: ListView(
                     children: [
-                      Text(
-                        "Register",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 35,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Text(
+                          "Register",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35,
+                          ),
                         ),
                       ),
-                      FormWidget(
-                        formText: "First Name",
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Username'),
+                          controller: textControllerUserName,
+                        ),
                       ),
-                      FormWidget(
-                        formText: "Last Name",
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                            decoration: InputDecoration(hintText: 'Email'),
+                            controller: textControllerEmail,
+                            validator: (value) {}),
                       ),
-                      FormWidget(
-                        formText: "Email",
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Password'),
+                          controller: textControllerPass,
+                          obscureText: true,
+                        ),
                       ),
-                      FormWidget(
-                        formText: "Password",
-                        isObscure: true,
-                      ),
-                      FormWidget(
-                        formText: "Confirm Password",
-                        isObscure: true,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                          decoration:
+                              InputDecoration(hintText: 'Confirm Password'),
+                          controller: textControllerComPass,
+                          obscureText: true,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 50.0),
                         child: ButtonLarge(
                           btnText: "Sign Up",
                           btnOnPressed: () async {
-                            final response = await SignUpUserHandler(
-                                "userName", "email", "password", "address");
+                            register_Customer.userUsername =
+                                textControllerUserName.text;
+                            register_Customer.userEmail =
+                                textControllerEmail.text;
+                            register_Customer.userPassword =
+                                textControllerPass.text;
+                            register_Customer.userImage = "";
+                            register_Customer.userAddress = "419, Kandy";
+                            register_Customer.userPhoneNo = 0770161414;
+
+                            print(textControllerUserName.text);
+                            final response =
+                                await SignUpUserHandler(register_Customer);
                             if (response == "") {
                               setState(() {
                                 // loginStatus = false;
@@ -88,6 +129,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       Container(
                           alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 30),
                           child: RichText(
                             text: TextSpan(
                                 style: TextStyle(

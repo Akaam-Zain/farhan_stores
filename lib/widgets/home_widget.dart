@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:farhan_stores/controllers/productsHandler.dart';
 import 'package:farhan_stores/models/productsModel.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
+import 'package:farhan_stores/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,19 +35,28 @@ class _HomeWidgetState extends State<HomeWidget> {
           padding: EdgeInsets.zero,
 
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.red,
-              ),
-              child: new CircleAvatar(
-                radius: 10.0,
-                backgroundColor: const Color(0xFF778899),
-                backgroundImage:
-                    NetworkImage("Your Photo Url"), // for Network image
+            UserAccountsDrawerHeader(
+              accountName: Text(context
+                  .watch<UserProvider>()
+                  .currentUser
+                  .customer
+                  .userUsername),
+              accountEmail: Text(
+                  context.watch<UserProvider>().currentUser.customer.userEmail),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "https://farhan-stores.herokuapp.com/uploads/user_pro_pic/" +
+                        context
+                            .watch<UserProvider>()
+                            .currentUser
+                            .customer
+                            .userImage
+                            .toString()),
               ),
             ),
             ListTile(
-              title: const Text('Item 1'),
+              leading: Icon(Icons.list),
+              title: const Text('Order History'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -55,7 +65,18 @@ class _HomeWidgetState extends State<HomeWidget> {
               },
             ),
             ListTile(
-              title: const Text('Item 2'),
+              leading: Icon(Icons.details),
+              title: const Text('About the Store'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.call),
+              title: const Text('Contact us'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -138,8 +159,25 @@ class _HomeWidgetState extends State<HomeWidget> {
             );
           } else {
             productListSliver = SliverToBoxAdapter(
-              child: CircularProgressIndicator(),
-            );
+                child: Container(
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 100.0),
+                      child: SizedBox(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
+                        height: 50.0,
+                        width: 50.0,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ));
           }
           return CustomScrollView(
             slivers: <Widget>[
@@ -213,12 +251,22 @@ class _HomeWidgetState extends State<HomeWidget> {
               SliverFixedExtentList(
                 itemExtent: 50,
                 delegate: SliverChildListDelegate([
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(child: Text("Frequently Purchased")),
-                        Container(child: Text("View All >")),
-                      ]),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Text("Frequently Purchased",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold))),
+                          Container(
+                              padding: EdgeInsets.only(right: 20),
+                              child: Text("View All >")),
+                        ]),
+                  ),
                 ]),
               ),
 

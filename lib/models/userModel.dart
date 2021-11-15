@@ -22,31 +22,42 @@ class User {
 
 class Customer {
   Customer({
-    required this.id,
+    this.id,
     required this.userUsername,
     required this.userEmail,
+    required this.userPassword,
     required this.userAddress,
     required this.userPhoneNo,
-    required this.userImage,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
+    this.userImage,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
   });
 
-  String id;
+  Customer.signUp(
+      {required this.userUsername,
+      required this.userEmail,
+      required this.userPassword,
+      required this.userAddress,
+      this.userPhoneNo,
+      this.userImage}) {}
+
+  String? id;
   String userUsername;
   String userEmail;
   String userAddress;
-  int userPhoneNo;
-  String userImage;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
+  int? userPhoneNo;
+  String? userImage;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? userPassword;
+  int? v;
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         id: json["_id"],
         userUsername: json["user_username"],
         userEmail: json["user_email"],
+        userPassword: json["user_password"],
         userAddress: json["user_address"],
         userPhoneNo: json["user_phone_no"],
         userImage: json["user_image"],
@@ -56,14 +67,11 @@ class Customer {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "user_username": userUsername,
         "user_email": userEmail,
+        "user_password": userPassword,
+        "user_image": userImage,
         "user_address": userAddress,
         "user_phone_no": userPhoneNo,
-        "user_image": userImage,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "__v": v,
       };
 }

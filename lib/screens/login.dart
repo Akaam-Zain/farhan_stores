@@ -2,6 +2,7 @@ import 'package:farhan_stores/controllers/login_handler.dart';
 import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/providers/user_provider.dart';
 import 'package:farhan_stores/screens/home.dart';
+import 'package:farhan_stores/screens/screens.dart';
 import 'package:farhan_stores/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ class LoginIn extends StatefulWidget {
 }
 
 class _LoginInState extends State<LoginIn> {
+  final textControllerEmail = TextEditingController();
+  final textControllerPass = TextEditingController();
+
   var loginStatus = true;
   @override
   Widget build(BuildContext context) {
@@ -50,20 +54,28 @@ class _LoginInState extends State<LoginIn> {
                           fontSize: 35,
                         ),
                       ),
-                      FormWidget(
-                        formText: "Email",
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Email'),
+                          controller: textControllerEmail,
+                        ),
                       ),
-                      FormWidget(
-                        formText: "Password",
-                        isObscure: true,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(hintText: 'Password'),
+                          controller: textControllerPass,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 50.0),
                         child: ButtonLarge(
                             btnText: "Login ",
                             btnOnPressed: () async {
-                              final currentUser =
-                                  await AuthorizeLogin("", "password");
+                              final currentUser = await AuthorizeLogin(
+                                  textControllerEmail.text,
+                                  textControllerPass.text);
                               if (currentUser.customer.userUsername == "" ||
                                   currentUser.customer.userUsername.isEmpty) {
                                 setState(() {
@@ -99,7 +111,11 @@ class _LoginInState extends State<LoginIn> {
                                     style: TextStyle(color: Colors.blueAccent),
                                     recognizer: new TapGestureRecognizer()
                                       ..onTap = () {
-                                        debugPrint("Gesture detected");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SignUp()));
                                       },
                                   )
                                 ]),

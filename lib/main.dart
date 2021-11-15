@@ -41,6 +41,6 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Roboto'),
           ),
         ),
-        home: token != '' ? HomePage() : HomePage()));
+        home: token != '' ? LoginIn() : HomePage()));
   }
 }

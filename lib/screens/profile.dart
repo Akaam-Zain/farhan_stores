@@ -43,7 +43,8 @@ class ProfileScreen extends StatelessWidget {
                             .watch<UserProvider>()
                             .currentUser
                             .customer
-                            .userImage),
+                            .userImage
+                            .toString()),
               ),
             ),
             Text("Akaam Zain"),

@@ -5,6 +5,7 @@ import 'package:farhan_stores/models/productsModel.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:spinner_input/spinner_input.dart';
 
 class ShoppingCart extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
+  double spinner = 0;
   @override
   Widget build(BuildContext context) {
     List<Product> cartList = context.watch<ShoppingCartProvider>().cartList;
@@ -98,24 +100,21 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.remove,
-                                    size: 24,
-                                    color: Colors.grey.shade700,
-                                  ),
                                   Container(
-                                    color: Colors.grey.shade200,
-                                    padding: const EdgeInsets.only(
-                                        bottom: 2, right: 12, left: 12),
-                                    child: Text(
-                                      "1",
+                                    child: SpinnerInput(
+                                      spinnerValue: spinner,
+                                      minusButton:
+                                          SpinnerButtonStyle(color: Colors.red),
+                                      plusButton:
+                                          SpinnerButtonStyle(color: Colors.red),
+                                      maxValue: 20,
+                                      onChange: (newValue) {
+                                        setState(() {
+                                          spinner = newValue;
+                                        });
+                                      },
                                     ),
                                   ),
-                                  Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: Colors.grey.shade700,
-                                  )
                                 ],
                               ),
                             )
@@ -200,12 +199,14 @@ footer(BuildContext context, List<Product> cartlist) {
                                   },
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    PlaceOrder("customerId", 2000.00, 2500.00,
-                                        cartlist);
-                                  },
-                                  child: Text("Place Order"),
-                                ),
+                                    onPressed: () {
+                                      PlaceOrder("customerId", 2000.00, 2500.00,
+                                          cartlist);
+                                    },
+                                    child: Text("Place Order"),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                    )),
                                 SizedBox(height: 50)
                               ],
                             ),
