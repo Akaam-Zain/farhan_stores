@@ -55,14 +55,14 @@ class _LoginInState extends State<LoginIn> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
+                        padding: const EdgeInsets.only(top: 50.0),
                         child: TextFormField(
                           decoration: InputDecoration(hintText: 'Email'),
                           controller: textControllerEmail,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
+                        padding: const EdgeInsets.only(top: 50.0),
                         child: TextFormField(
                           decoration: InputDecoration(hintText: 'Password'),
                           controller: textControllerPass,
@@ -100,6 +100,7 @@ class _LoginInState extends State<LoginIn> {
                       ),
                       Container(
                           alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 30),
                           child: RichText(
                             text: TextSpan(
                                 style: TextStyle(

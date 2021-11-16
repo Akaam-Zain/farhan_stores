@@ -229,15 +229,26 @@ footer(BuildContext context, List<Product> cartlist) {
       ),
     );
   } else {
-    return Expanded(
-      child: Container(
-        height: MediaQuery.of(context).size.height - 100,
-        child: Center(
-          child: Text(
-            "Cart is empty!",
-            textAlign: TextAlign.center,
+    return Container(
+      height: MediaQuery.of(context).size.height / 1.3,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          new Container(
+            child: new Image.network(
+              "https://via.placeholder.com/300",
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+          Text(
+            "Cart is empty",
+            style: TextStyle(
+              color: Colors.black38,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

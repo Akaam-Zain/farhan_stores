@@ -24,8 +24,11 @@ class _SignUpState extends State<SignUp> {
   final textControllerEmail = TextEditingController();
   final textControllerPass = TextEditingController();
   final textControllerComPass = TextEditingController();
+  final textControllerComPhone = TextEditingController();
 
-  @override
+  bool _passwordVisible = false;
+  bool _conPasswordVisible = false;
+
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.topCenter,
@@ -51,7 +54,7 @@ class _SignUpState extends State<SignUp> {
                   child: ListView(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 50.0),
+                        padding: const EdgeInsets.only(bottom: 40.0),
                         child: Text(
                           "Register",
                           textAlign: TextAlign.center,
@@ -61,12 +64,9 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(hintText: 'Username'),
-                          controller: textControllerUserName,
-                        ),
+                      TextFormField(
+                        decoration: InputDecoration(hintText: 'Username'),
+                        controller: textControllerUserName,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 40.0),
@@ -78,18 +78,59 @@ class _SignUpState extends State<SignUp> {
                       Padding(
                         padding: const EdgeInsets.only(top: 40.0),
                         child: TextFormField(
-                          decoration: InputDecoration(hintText: 'Password'),
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
+                          ),
                           controller: textControllerPass,
-                          obscureText: true,
+                          obscureText: _passwordVisible,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 40.0),
                         child: TextFormField(
-                          decoration:
-                              InputDecoration(hintText: 'Confirm Password'),
+                          decoration: InputDecoration(
+                            hintText: 'Confirm Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _conPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                setState(() {
+                                  _conPasswordVisible = !_conPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
                           controller: textControllerComPass,
-                          obscureText: true,
+                          obscureText: _conPasswordVisible,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              hintText: 'Phone No. : eg. 0777 xxx xxxx'),
+                          controller: textControllerComPhone,
                         ),
                       ),
                       Padding(

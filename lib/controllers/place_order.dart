@@ -13,7 +13,7 @@ Future<bool> PlaceOrder(
   List<Product> productList,
 ) async {
   final response = await http.post(
-    Uri.parse('http://192.168.1.7:4000/user-view/placeOrder'),
+    Uri.parse('https://farhan-stores.herokuapp.com/user-view/placeOrder'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -24,10 +24,11 @@ Future<bool> PlaceOrder(
         'customerAddress': "Akurana Near Balika",
         'customerPhone': "770161414",
         'subTotal': 2000,
-        'total': 2500,
+        'total': 27000,
         'products': [
           {"productId": 543, "productName": "Cadbury", "price": 800}
-        ]
+        ],
+        'orderStatus': 'Pending'
       }
     }),
   );

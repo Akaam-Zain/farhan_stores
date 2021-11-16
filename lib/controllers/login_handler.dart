@@ -10,7 +10,7 @@ Future<User> AuthorizeLogin(String email, String password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(
-        <String, String>{'email': "zayn@gmail.com", 'password': "zayn1234"}),
+        <String, String>{'email': "muntha@gmail.com", 'password': "asd123"}),
   );
 
   print(response.body);

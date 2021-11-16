@@ -1,8 +1,10 @@
 import 'package:farhan_stores/providers/products_provider.dart';
 import 'package:farhan_stores/providers/shopping_cart_provider.dart';
 import 'package:farhan_stores/providers/user_provider.dart';
+import 'package:farhan_stores/screens/delivery_address.dart';
 import 'package:farhan_stores/screens/home.dart';
 import 'package:farhan_stores/screens/screens.dart';
+import 'package:farhan_stores/screens/upload_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +43,6 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Roboto'),
           ),
         ),
-        home: token != '' ? LoginIn() : HomePage()));
+        home: token != '' ? LoginIn() : LoginIn()));
   }
 }

@@ -71,7 +71,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.details),
+              leading: Icon(Icons.subject),
               title: const Text('About the Store'),
               onTap: () {
                 // Update the state of the app
